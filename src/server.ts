@@ -12,8 +12,10 @@ import "dotenv/config";
 const PORT = Number(process.env.PORT ?? 3333);
 const PUBLIC_BASE_URL = process.env.PUBLIC_BASE_URL ?? `http://localhost:${PORT}`;
 
-app.get("/", (req, res) => {
-  res.send("MCP server is running");
+// This handles BOTH GET and HEAD methods instantly
+app.use("/", (req, res, next) => {
+  if (req.path !== '/') return next(); // Only handle the exact root path
+  res.status(200).send("MCP server is running");
 });
 
 const app = express();
