@@ -19,15 +19,6 @@ app.use(requestIdMiddleware);
 // RFC 9728 — Protected Resource Metadata. Anonymous, must be reachable.
 app.get("/.well-known/oauth-protected-resource", protectedResourceMetadata);
 
-
-app.head('/', (req, res) => {
-  res.status(200).end();
-});
-
-app.get('/', (req, res) => {
-  res.status(200).json({ status: "healthy", message: "MCP Server is running" });
-});
-
 // Map of sessionId → transport. Streamable HTTP is stateful by default.
 const transports = new Map<string, StreamableHTTPServerTransport>();
 
