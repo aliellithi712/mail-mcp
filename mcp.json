@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "tasks": {
+      "command": "npx",
+      "args": ["tsx", "src/server.ts"],
+      "env": {
+        "PUBLIC_BASE_URL": "http://localhost:3333",
+        "OAUTH_ISSUER": "https://dev-qdfps2e8fl01pks2.us.auth0.com/"
+      }
+    }
+  }
+}
