@@ -12,6 +12,10 @@ import "dotenv/config";
 const PORT = Number(process.env.PORT ?? 3333);
 const PUBLIC_BASE_URL = process.env.PUBLIC_BASE_URL ?? `http://localhost:${PORT}`;
 
+app.get("/", (req, res) => {
+  res.send("MCP server is running");
+});
+
 const app = express();
 app.use(express.json({ limit: "1mb" }));
 app.use(requestIdMiddleware);
