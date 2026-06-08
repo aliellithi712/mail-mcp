@@ -39,7 +39,7 @@ app.all("/mcp", requireBearerToken, async (req, res) => {
       onsessioninitialized: (sid) => { transports.set(sid, transport!); },
       enableDnsRebindingProtection: false,
       allowedHosts: [`localhost:${PORT}`, `127.0.0.1:${PORT}`, 'onrender.com' , 'test-nodejs-app-1.onrender.com'],
-      allowedOrigins: ["https://claude.ai", "https://app.cursor.com", "*.salesforce.com"],
+      allowedOrigins: ["https://claude.ai", "https://app.cursor.com", "https://orgfarm-e307e8ad28-dev-ed.develop.my.salesforce.com"],
     });
     transport.onclose = () => {
       if (transport!.sessionId) transports.delete(transport!.sessionId);
