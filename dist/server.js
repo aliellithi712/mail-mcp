@@ -25,8 +25,8 @@ app.all("/mcp", requireBearerToken, async (req, res) => {
             sessionIdGenerator: () => randomUUID(),
             // onsessioninitialized: (sid) => transports.set(sid, transport!),
             onsessioninitialized: (sid) => { transports.set(sid, transport); },
-            enableDnsRebindingProtection: true,
-            allowedHosts: [`localhost:${PORT}`, `127.0.0.1:${PORT}`],
+            enableDnsRebindingProtection: false,
+            allowedHosts: [`localhost:${PORT}`, `127.0.0.1:${PORT}`, '1bbd-41-237-156-66.ngrok-free.app', 'test-nodejs-app-1.onrender.com'],
             allowedOrigins: ["https://claude.ai", "https://app.cursor.com"],
         });
         transport.onclose = () => {
@@ -49,5 +49,5 @@ app.all("/mcp", requireBearerToken, async (req, res) => {
     await transport.handleRequest(req, res, req.body);
 });
 app.listen(PORT, () => {
-    logger.info({ port: PORT, baseUrl: PUBLIC_BASE_URL }, "mcp server listening");
+    logger.info({ port: PORT, baseUrl: PUBLIC_BASE_URL }, "mcp server listening TEST");
 });
