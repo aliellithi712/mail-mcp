@@ -12,15 +12,15 @@ import "dotenv/config";
 const PORT = Number(process.env.PORT ?? 3333);
 const PUBLIC_BASE_URL = process.env.PUBLIC_BASE_URL ?? `http://localhost:${PORT}`;
 
+const app = express();
+app.use(express.json({ limit: "1mb" }));
+app.use(requestIdMiddleware);
+
 // This handles BOTH GET and HEAD methods instantly
 app.use("/", (req, res, next) => {
   if (req.path !== '/') return next(); // Only handle the exact root path
   res.status(200).send("MCP server is running");
 });
-
-const app = express();
-app.use(express.json({ limit: "1mb" }));
-app.use(requestIdMiddleware);
 
 // RFC 9728 — Protected Resource Metadata. Anonymous, must be reachable.
 app.get("/.well-known/oauth-protected-resource", protectedResourceMetadata);
