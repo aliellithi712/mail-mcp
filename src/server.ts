@@ -11,6 +11,7 @@ import "dotenv/config";
 
 const PORT = Number(process.env.PORT ?? 3333);
 const PUBLIC_BASE_URL = process.env.PUBLIC_BASE_URL ?? `http://localhost:${PORT}`;
+const skipAuth = process.env.DISABLE_AUTH === "true";
 
 const app = express();
 app.use(express.json({ limit: "1mb" }));
@@ -28,7 +29,8 @@ app.get("/.well-known/oauth-protected-resource", protectedResourceMetadata);
 // Map of sessionId → transport. Streamable HTTP is stateful by default.
 const transports = new Map<string, StreamableHTTPServerTransport>();
 
-app.all("/mcp", requireBearerToken, async (req, res) => {
+app.all("/mcp", (req, res, next) => skipAuth ? next() : requireBearerToken(req, res, next),
+  async (req, res) => {
   const sessionHeader = req.header("mcp-session-id");
   let transport = sessionHeader ? transports.get(sessionHeader) : undefined;
 
